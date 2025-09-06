@@ -42,8 +42,8 @@ function App() {
         return <AdvisoryManagement user={user} />;
       case 'crops':
         return (
-          <div className="p-4 lg:p-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 text-center">
+          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+            <div className="card p-8 text-center">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Crop Recommendation Trends</h1>
               <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
             </div>
@@ -51,8 +51,8 @@ function App() {
         );
       case 'yield':
         return (
-          <div className="p-4 lg:p-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 text-center">
+          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+            <div className="card p-8 text-center">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Yield Prediction Insights</h1>
               <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
             </div>
@@ -60,8 +60,8 @@ function App() {
         );
       case 'reports':
         return (
-          <div className="p-4 lg:p-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 text-center">
+          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+            <div className="card p-8 text-center">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Reports & Feedback</h1>
               <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
             </div>

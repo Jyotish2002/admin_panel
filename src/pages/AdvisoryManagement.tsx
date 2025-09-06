@@ -73,7 +73,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
           </div>
           <button
             onClick={() => setShowCreateForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm lg:text-base"
+            className="btn-primary flex items-center space-x-2 text-sm lg:text-base"
           >
             <Plus className="h-4 w-4" />
             <span>New Advisory</span>
@@ -83,10 +83,10 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
 
       {/* Pending Approvals for Admin */}
       {user.role === 'admin' && pendingAdvisories.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-6">
+        <div className="card mb-6">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
-              <Clock className="h-5 w-5 text-yellow-500" />
+              <Clock className="h-5 w-5 text-orange-500" />
               <span>Pending Approvals ({pendingAdvisories.length})</span>
             </h2>
           </div>
@@ -106,7 +106,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                       <span>by {advisory.expertName}</span>
                       <div className="flex flex-wrap gap-1">
                         {advisory.regions.map(region => (
-                          <span key={region} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium">
+                          <span key={region} className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 text-xs rounded-full font-medium">
                             {region}
                           </span>
                         ))}
@@ -117,14 +117,14 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleApproveAdvisory(advisory.id)}
-                      className="flex items-center space-x-1 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+                      className="flex items-center space-x-1 px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm"
                     >
                       <Check className="h-4 w-4" />
                       <span>Approve & Send</span>
                     </button>
                     <button
                       onClick={() => setShowApprovalModal(advisory.id)}
-                      className="flex items-center space-x-1 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                      className="flex items-center space-x-1 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 text-sm"
                     >
                       <X className="h-4 w-4" />
                       <span>Reject</span>
@@ -139,7 +139,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
 
       {/* Create Advisory Form */}
       {showCreateForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Create New Advisory</h2>
             
@@ -152,7 +152,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                   placeholder="Enter advisory title"
                   required
                 />
@@ -166,7 +166,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={6}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                   placeholder="Enter advisory message"
                   required
                 />
@@ -179,7 +179,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                 <select
                   value={formData.crop}
                   onChange={(e) => setFormData({ ...formData, crop: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-field"
                   required
                 >
                   <option value="">Select crop</option>
@@ -208,7 +208,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                             setFormData({ ...formData, regions: formData.regions.filter(r => r !== region) });
                           }
                         }}
-                        className="text-blue-600 focus:ring-blue-500 rounded"
+                        className="text-primary-600 focus:ring-primary-500 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">{region}</span>
                     </label>
@@ -219,7 +219,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
               <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                 <button
                   type="submit"
-                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="btn-primary flex-1 flex items-center justify-center space-x-2"
                 >
                   <Send className="h-4 w-4" />
                   <span>{user.role === 'admin' ? 'Send Advisory' : 'Submit for Approval'}</span>
@@ -227,7 +227,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                 <button
                   type="button"
                   onClick={() => setShowCreateForm(false)}
-                  className="px-4 py-2 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="px-4 py-2 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
                 >
                   Cancel
                 </button>
@@ -239,7 +239,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
 
       {/* Rejection Modal */}
       {showApprovalModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Reject Advisory</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">Please provide a reason for rejection:</p>
@@ -248,7 +248,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
               value={rejectionReason}
               onChange={(e) => setRejectionReason(e.target.value)}
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+              className="input-field mb-4"
               placeholder="Enter rejection reason..."
               required
             />
@@ -256,7 +256,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
             <div className="flex space-x-4">
               <button
                 onClick={() => handleRejectAdvisory(showApprovalModal)}
-                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
                 disabled={!rejectionReason.trim()}
               >
                 Reject Advisory
@@ -266,7 +266,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                   setShowApprovalModal(null);
                   setRejectionReason('');
                 }}
-                className="px-4 py-2 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="px-4 py-2 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
               >
                 Cancel
               </button>
@@ -277,40 +277,40 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
 
       {/* Advisory Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-6">
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+        <div className="card p-6">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-green-100 rounded-lg">
-              <Send className="h-6 w-6 text-green-600" />
+            <div className="p-3 bg-primary-100 dark:bg-primary-900/20 rounded-lg">
+              <Send className="h-6 w-6 text-primary-600 dark:text-primary-400" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Total Sent</h3>
-              <p className="text-2xl font-bold text-green-600">{mockAdvisories.filter(a => a.status === 'sent').length}</p>
+              <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">{mockAdvisories.filter(a => a.status === 'sent').length}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+        <div className="card p-6">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <Eye className="h-6 w-6 text-blue-600" />
+            <div className="p-3 bg-secondary-100 dark:bg-secondary-900/20 rounded-lg">
+              <Eye className="h-6 w-6 text-secondary-600 dark:text-secondary-400" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Total Views</h3>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-secondary-600 dark:text-secondary-400">
                 {mockAdvisories.reduce((sum, a) => sum + a.readCount, 0).toLocaleString()}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+        <div className="card p-6">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-yellow-100 rounded-lg">
-              <Clock className="h-6 w-6 text-yellow-600" />
+            <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg">
+              <Clock className="h-6 w-6 text-orange-600 dark:text-orange-400" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Pending</h3>
-              <p className="text-2xl font-bold text-yellow-600">
+              <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
                 {pendingAdvisories.length}
               </p>
             </div>
@@ -319,7 +319,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
       </div>
 
       {/* Advisory List */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div className="card">
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
             {user.role === 'admin' ? 'All Advisories' : 'My Advisories'}
@@ -328,7 +328,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
         
         <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {displayAdvisories.map((advisory) => (
-            <div key={advisory.id} className="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+            <div key={advisory.id} className="p-4 lg:p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
               <div className="flex flex-col lg:flex-row lg:items-start justify-between mb-4">
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">{advisory.title}</h3>
@@ -345,7 +345,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                         <span>{advisory.readCount.toLocaleString()} views</span>
                       </div>
                     )}
-                    <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-xs font-medium">
+                    <span className="bg-secondary-100 dark:bg-secondary-900/30 text-secondary-800 dark:text-secondary-300 px-2 py-1 rounded-full text-xs font-medium">
                       {advisory.crop}
                     </span>
                   </div>
@@ -355,7 +355,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
                   <span className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(advisory.status)}`}>
                     {advisory.status.replace('_', ' ').charAt(0).toUpperCase() + advisory.status.replace('_', ' ').slice(1)}
                   </span>
-                  <button className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium">
+                  <button className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-medium">
                     View Details
                   </button>
                 </div>
@@ -364,7 +364,7 @@ export function AdvisoryManagement({ user }: AdvisoryManagementProps) {
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap gap-1 mb-2 lg:mb-0">
                   {advisory.regions.map(region => (
-                    <span key={region} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium">
+                    <span key={region} className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 text-xs rounded-full font-medium">
                       {region}
                     </span>
                   ))}
