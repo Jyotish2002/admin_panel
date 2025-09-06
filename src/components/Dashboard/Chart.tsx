@@ -11,23 +11,23 @@ export function Chart({ title, data, type }: ChartProps) {
     const maxValue = Math.max(...data.map(item => item.value));
     
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">{title}</h3>
+      <div className="card p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{title}</h3>
         <div className="space-y-4">
           {data.map((item, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <div className="w-20 text-sm text-gray-600 font-medium">{item.label}</div>
+              <div className="w-20 text-sm text-gray-600 dark:text-gray-400 font-medium">{item.label}</div>
               <div className="flex-1">
-                <div className="bg-gray-200 rounded-full h-6 relative overflow-hidden">
+                <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-6 relative overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-1000 ${
-                      item.color || 'bg-blue-500'
+                      item.color || 'bg-gradient-to-r from-primary-500 to-primary-600'
                     }`}
                     style={{ width: `${(item.value / maxValue) * 100}%` }}
                   />
                 </div>
               </div>
-              <div className="w-12 text-sm font-semibold text-gray-900">{item.value}</div>
+              <div className="w-12 text-sm font-semibold text-gray-900 dark:text-white">{item.value}</div>
             </div>
           ))}
         </div>
@@ -39,8 +39,8 @@ export function Chart({ title, data, type }: ChartProps) {
     const total = data.reduce((sum, item) => sum + item.value, 0);
     
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">{title}</h3>
+      <div className="card p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{title}</h3>
         <div className="flex items-center justify-center">
           <div className="relative w-48 h-48">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -50,6 +50,8 @@ export function Chart({ title, data, type }: ChartProps) {
                 const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`;
                 const strokeDashoffset = -acc.offset;
                 
+                const colors = ['#22c55e', '#16a34a', '#15803d', '#84cc16', '#65a30d'];
+                
                 acc.elements.push(
                   <circle
                     key={index}
@@ -57,7 +59,7 @@ export function Chart({ title, data, type }: ChartProps) {
                     cy="50"
                     r="45"
                     fill="none"
-                    stroke={item.color || `hsl(${index * 60}, 70%, 50%)`}
+                    stroke={item.color || colors[index % colors.length]}
                     strokeWidth="10"
                     strokeDasharray={strokeDasharray}
                     strokeDashoffset={strokeDashoffset}
@@ -72,20 +74,23 @@ export function Chart({ title, data, type }: ChartProps) {
           </div>
         </div>
         <div className="mt-6 space-y-2">
-          {data.map((item, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: item.color || `hsl(${index * 60}, 70%, 50%)` }}
-                />
-                <span className="text-sm text-gray-600">{item.label}</span>
+          {data.map((item, index) => {
+            const colors = ['#22c55e', '#16a34a', '#15803d', '#84cc16', '#65a30d'];
+            return (
+              <div key={index} className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: item.color || colors[index % colors.length] }}
+                  />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{item.label}</span>
+                </div>
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                  {((item.value / total) * 100).toFixed(1)}%
+                </span>
               </div>
-              <span className="text-sm font-semibold text-gray-900">
-                {((item.value / total) * 100).toFixed(1)}%
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );

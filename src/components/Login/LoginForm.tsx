@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Leaf, Lock, Mail, AlertCircle } from 'lucide-react';
+import { Leaf, Lock, Mail, AlertCircle, Sun, Moon } from 'lucide-react';
 import { User } from '../../types';
 import { useTheme } from '../../contexts/ThemeContext';
 
@@ -23,7 +23,7 @@ const mockUsers: User[] = [
 ];
 
 export function LoginForm({ onLogin }: LoginFormProps) {
-  const { isDark } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -47,14 +47,21 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 transition-colors">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-secondary-50 to-primary-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 transition-colors">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
+        <button
+          onClick={toggleTheme}
+          className="absolute top-4 right-4 p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-200"
+        >
+          {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+
         <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
             <Leaf className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">AgriAdmin Portal</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">Government & Expert Access</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Farmer Analytics Dashboard</p>
         </div>
 
         {error && (
@@ -75,7 +82,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className="input-field pl-10"
                 placeholder="your@email.com"
                 required
               />
@@ -92,7 +99,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className="input-field pl-10"
                 placeholder="Enter your password"
                 required
               />
@@ -102,15 +109,15 @@ export function LoginForm({ onLogin }: LoginFormProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 disabled:opacity-50 shadow-lg hover:shadow-xl"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-300 font-medium mb-2">Demo Credentials:</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg border border-primary-200 dark:border-primary-800">
+          <p className="text-sm text-primary-700 dark:text-primary-300 font-medium mb-2">Demo Credentials:</p>
+          <p className="text-xs text-primary-600 dark:text-primary-400">
             Admin: admin@agri.gov.in / admin123<br />
             Expert: expert@agri.gov.in / admin123
           </p>
