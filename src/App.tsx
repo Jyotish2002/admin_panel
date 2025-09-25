@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Header } from './components/Layout/Header';
 import { Sidebar } from './components/Layout/Sidebar';
@@ -7,11 +7,27 @@ import { Dashboard } from './pages/Dashboard';
 import { FarmerQueries } from './pages/FarmerQueries';
 import { DiseaseHotspots } from './pages/DiseaseHotspots';
 import { AdvisoryManagement } from './pages/AdvisoryManagement';
+import { CropTrends } from './pages/CropTrends';
+import YieldInsights from './pages/YieldInsights';
+import ReportsFeedback from './pages/ReportsFeedback';
 import { User } from './types';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleLogin = (userData: User) => {
     setUser(userData);
@@ -20,6 +36,13 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     setCurrentPage('dashboard');
+  };
+
+  const handlePageChange = (page: string) => {
+    setCurrentPage(page);
+    if (isMobile) {
+      setIsMobileSidebarOpen(false);
+    }
   };
 
   if (!user) {
@@ -41,32 +64,11 @@ function App() {
       case 'advisories':
         return <AdvisoryManagement user={user} />;
       case 'crops':
-        return (
-          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
-            <div className="card p-8 text-center">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Crop Recommendation Trends</h1>
-              <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
-            </div>
-          </div>
-        );
+        return <CropTrends />;
       case 'yield':
-        return (
-          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
-            <div className="card p-8 text-center">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Yield Prediction Insights</h1>
-              <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
-            </div>
-          </div>
-        );
+          return <YieldInsights />;
       case 'reports':
-        return (
-          <div className="p-4 lg:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
-            <div className="card p-8 text-center">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Reports & Feedback</h1>
-              <p className="text-gray-600 dark:text-gray-400">Feature coming soon...</p>
-            </div>
-          </div>
-        );
+          return <ReportsFeedback />;
       default:
         return <Dashboard />;
     }
@@ -77,8 +79,23 @@ function App() {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
         <Header user={user} onLogout={handleLogout} />
         <div className="flex">
-          <Sidebar currentPage={currentPage} onPageChange={setCurrentPage} />
-          <main className="flex-1 min-w-0">
+          {/* Mobile sidebar overlay */}
+          {isMobile && isMobileSidebarOpen && (
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+              onClick={() => setIsMobileSidebarOpen(false)}
+            />
+          )}
+          
+          {/* Sidebar */}
+          <div className={`
+            ${isMobile ? 'fixed inset-y-0 left-0 z-50 transform transition-transform duration-300' : 'relative'}
+            ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          `}>
+            <Sidebar currentPage={currentPage} onPageChange={handlePageChange} />
+          </div>
+          
+          <main className="flex-1 min-w-0 md:ml-0">
             {renderPage()}
           </main>
         </div>
