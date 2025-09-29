@@ -32,7 +32,7 @@ A modern React TypeScript admin dashboard for agricultural management, built wit
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Sumitshaw13/Admin_Panel.git
+   git clone https://github.com/Jyotish2002/admin_panel.git
    cd Admin_Panel
    ```
 
